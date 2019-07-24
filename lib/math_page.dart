@@ -30,6 +30,7 @@ class _MathPageState extends State<MathPage> {
               SizedBox(height: 5),
               TextField(
                 controller: firstLegController,
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(border: OutlineInputBorder()),
               ),
               SizedBox(height: 20),
@@ -37,6 +38,7 @@ class _MathPageState extends State<MathPage> {
               SizedBox(height: 5),
               TextField(
                 controller: secondLegController,
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(border: OutlineInputBorder()),
               ),
               RaisedButton(
