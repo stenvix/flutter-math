@@ -21,8 +21,9 @@ class _MathPageState extends State<MathPage> {
         appBar: AppBar(
           title: Text("Math BLoC"),
         ),
-        body: BlocBuilder<MathBloc, MathState>(
-          builder: (BuildContext context, state) {
+        body: StreamBuilder(
+          stream: bloc.state,
+          builder: (context, state) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
@@ -44,9 +45,9 @@ class _MathPageState extends State<MathPage> {
                   RaisedButton(
                     child: Text("Посчитать гипотенузу"),
                     onPressed: () {
-                      calculateFirstLeg(bloc)
-                          .then((_) => calculateSecondLeg(bloc))
-                          .then((_) => calculateHypotenuse(bloc));
+                      bloc.dispatch(CalculateHypotenuse(
+                          firstLeg: firstLegController.text,
+                          secondLeg: secondLegController.text));
                     },
                   ),
                   SizedBox(
@@ -56,15 +57,15 @@ class _MathPageState extends State<MathPage> {
                   SizedBox(
                     height: 5,
                   ),
-                  Text("Квадрат катета №1:  ${state.firstLeg}"),
+                  buildFirstLeg(state),
                   SizedBox(
                     height: 5,
                   ),
-                  Text("Квадрат катета №2:  ${state.secondLeg}"),
+                  buildSecondLeg(state),
                   SizedBox(
                     height: 5,
                   ),
-                  Text("Гипотенуза: ${state.hypotenuse}"),
+                  buildHypotenuse(state)
                 ],
               ),
             );
@@ -72,26 +73,29 @@ class _MathPageState extends State<MathPage> {
         ));
   }
 
-  Future calculateFirstLeg(MathBloc bloc) {
-    return Future.delayed(Duration(seconds: 1), () {
-      var intLeg = double.parse(firstLegController.text);
-      var leg = intLeg * intLeg;
-      bloc.dispatch(FirstLegCalculated(leg: leg));
-    });
+  Widget buildFirstLeg(AsyncSnapshot<MathState> snapshot) {
+    if (snapshot.hasData && !(snapshot.data is InitialMathState)) {
+      return Text("Квадрат катета №1:  ${snapshot.data.firstLeg}");
+    } else {
+      return SizedBox.shrink();
+    }
   }
 
-  Future calculateSecondLeg(MathBloc bloc) {
-    return Future.delayed(Duration(seconds: 1), () {
-      var intLeg = double.parse(secondLegController.text);
-      var leg = intLeg * intLeg;
-      bloc.dispatch(SecondLegCalculated(leg: leg));
-    });
+  Widget buildSecondLeg(AsyncSnapshot<MathState> snapshot) {
+    if (snapshot.hasData &&
+        !(snapshot.data is InitialMathState ||
+            snapshot.data is FirstLegMathState)) {
+      return Text("Квадрат катета №2:  ${snapshot.data.secondLeg}");
+    } else {
+      return SizedBox.shrink();
+    }
   }
 
-  Future calculateHypotenuse(MathBloc bloc) {
-    return Future.delayed(Duration(seconds: 1), () {
-      var hypotenuse = sqrt(bloc.firstLeg + bloc.secondLeg);
-      bloc.dispatch(HypotenuseCalculated(hypotenuse: hypotenuse));
-    });
+  Widget buildHypotenuse(AsyncSnapshot<MathState> snapshot) {
+    if (snapshot.hasData && snapshot.data is HypotenuseMathState) {
+      return Text("Гипотенуза: ${snapshot.data.hypotenuse}");
+    } else {
+      return SizedBox.shrink();
+    }
   }
 }

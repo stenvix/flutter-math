@@ -4,20 +4,9 @@ abstract class MathEvent extends Equatable {
   MathEvent([List props = const []]) : super(props);
 }
 
-class FirstLegCalculated extends MathEvent {
-  final double leg;
+class CalculateHypotenuse extends MathEvent {
+  final String firstLeg;
+  final String secondLeg;
 
-  FirstLegCalculated({this.leg}) : super([leg]);
-}
-
-class SecondLegCalculated extends MathEvent {
-  final double leg;
-
-  SecondLegCalculated({this.leg}) : super([leg]);
-}
-
-class HypotenuseCalculated extends MathEvent {
-  final double hypotenuse;
-
-  HypotenuseCalculated({this.hypotenuse}) : super([hypotenuse]);
+  CalculateHypotenuse({this.firstLeg, this.secondLeg});
 }
