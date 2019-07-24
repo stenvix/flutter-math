@@ -1,16 +1,30 @@
+
 # flutter_math
 
-A new Flutter project.
+## Условия:
 
-## Getting Started
+```bash
+Решить через 1 БЛоК и реактивно, 
+выводя поочередно длины катетов и гипотенузы.
 
-This project is a starting point for a Flutter application.
+Посчитать все, а потом все вывести - НЕЛЬЗЯ, 
+задачка должна быть решена реактивно, а не императивно.
 
-A few resources to get you started if this is your first Flutter project:
+Перерендеривать за зря огромную область с кучей виджетов 
+или вообще в пустую - также НЕЛЬЗЯ.
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
++---------------------------------+
+| Длина катета №1:  [Поле ввода]  |
+|                                 |
+| Длина катета №2:  [Поле ввода]  |
+|                                 |
+| [Кнопка посчитать гипотенузу]   |
+|                                 |
+|                                 |
+| Квадрат катета №1:  [Результат] |
+|                                 |
+| Квадрат катета №2:  [Результат] |
+|                                 |
+| Длина гипотенузы:   [Результат] |
++---------------------------------+
+```

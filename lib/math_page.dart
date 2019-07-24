@@ -1,4 +1,4 @@
-import 'dart:math';
+//import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,7 +59,7 @@ class _MathPageState extends State<MathPage> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Text(
-                        "Квадрат катета №1:  ${snapshot.data.firstLeg}");
+                        "Квадрат катета №1:  ${snapshot.data.leg}");
                   } else {
                     return SizedBox.shrink();
                   }
@@ -74,7 +74,7 @@ class _MathPageState extends State<MathPage> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Text(
-                        "Квадрат катета №2:  ${snapshot.data.secondLeg}");
+                        "Квадрат катета №2:  ${snapshot.data.leg}");
                   } else {
                     return SizedBox.shrink();
                   }
