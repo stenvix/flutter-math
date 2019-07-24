@@ -13,26 +13,35 @@ class MathBloc extends Bloc<MathEvent, MathState> {
   @override
   get initialState => InitialMathState();
 
+  get firstLegState => this
+      .state
+      .where((state) => state is FirstLegMathState)
+      .cast<FirstLegMathState>();
+  get secondLegState => this
+      .state
+      .where((state) => state is SecondLegMathState)
+      .cast<SecondLegMathState>();
+  get hypotenuseState => this
+      .state
+      .where((state) => state is HypotenuseMathState)
+      .cast<HypotenuseMathState>();
+
   @override
   Stream<MathState> mapEventToState(MathEvent event) async* {
     if (event is CalculateHypotenuse) {
-      if (currentState is InitialMathState|| currentState is HypotenuseMathState) {
-        var leg = await repository.calculateLeg(event.firstLeg);
-        yield FirstLegMathState(firstLeg: leg);
-      }
-      if (currentState is FirstLegMathState) {
-        var leg = await repository.calculateLeg(event.secondLeg);
-        yield SecondLegMathState(
-            firstLeg: currentState.firstLeg, secondLeg: leg);
-      }
-      if (currentState is SecondLegMathState) {
-        var hypotenuse = await repository.calculateHypotenuse(
-            currentState.firstLeg, currentState.secondLeg);
-        yield HypotenuseMathState(
-            firstLeg: currentState.firstLeg,
-            secondLeg: currentState.secondLeg,
-            hypotenuse: hypotenuse);
-      }
+      var firstLeg = await repository.calculateLeg(event.firstLeg);
+      yield FirstLegMathState(firstLeg: firstLeg);
+
+      var secondLeg = await repository.calculateLeg(event.secondLeg);
+      yield SecondLegMathState(
+          firstLeg: currentState.firstLeg, secondLeg: secondLeg);
+
+      var hypotenuse = await repository.calculateHypotenuse(
+          currentState.firstLeg, currentState.secondLeg);
+      yield HypotenuseMathState(
+          firstLeg: currentState.firstLeg,
+          secondLeg: currentState.secondLeg,
+          hypotenuse: hypotenuse);
     }
   }
 }
